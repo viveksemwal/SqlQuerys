@@ -1,0 +1,25 @@
+1.Select * from Person.Person as p where p.ModifiedDate > '2006-12-29' order by p.ModifiedDate asc;
+2.Select * from Person.Person as p  where not (p.ModifiedDate < '2007-02-01' and p.ModifiedDate >'2006-12-31') order by p.ModifiedDate asc;
+3.Select p.Name,p.ProductID from Production.Product as p where p.Name like 'Chain%';
+4.Select p.FirstName,p.MiddleName,p.LastName,p.BusinessEntityID from Person.Person as p where p.MiddleName = 'E' or p.MiddleName ='B';
+5.Select s.SalesOrderID,s.OrderDate,s.TotalDue from Sales.SalesOrderHeader as s where month(s.OrderDate) =9 and year(s.OrderDate) =2011 and s.TotalDue > 1000;
+6.Select s.SalesOrderID, s.SalesPersonID,s.TerritoryID,s.TotalDue from Sales.SalesOrderHeader as s where s.TotalDue > 1000 and s.SalesPersonID=279 or s.TerritoryID =6  order by s.TotalDue asc;
+7.Select * from Production.Product as s where not s.Color='Blue';
+8.Select * from Person.Person order by LastName,MiddleName,FirstName asc;
+9.Select CONCAT(a.AddressLine1,'( ',a.City,' ',a.PostalCode,' )') from Person.Address as a ;
+10.SELECT ISNULL(p.Color,'No Color'),p.ProductID,p.Name  from Production.Product as p;
+11.SELECT CONCAT_WS(' : ','Name', ISNULL(p.Color,'No Color')),p.ProductID,p.Name  from Production.Product as p;
+12.SELECT abs(isnull(p.MaxQty,0) -isnull(p.MinQty,0))as QtyDiff,p.SpecialOfferID,p.Description,p.MaxQty,p.MinQty  from Sales.SpecialOffer as p;
+13.SELECT p.SpecialOfferID,p.Description,isnull(p.MaxQty,10)*p.DiscountPct from Sales.SpecialOffer as p;
+14.SELECT left(a.AddressLine1,10) from Person.Address as a;
+15.SELECT DATEDIFF(DAY,a.OrderDate,a.ShipDate) from Sales.SalesOrderHeader as a;
+16.SELECT CONVERT(date,a.ModifiedDate,111) from Sales.SalesOrderHeader as a;
+17.SELECT DATEADD(MONTH,6,a.OrderDate), a.OrderDate from Sales.SalesOrderHeader as a;
+21.SELECT  a.OrderDate from Sales.SalesOrderHeader as a order by month(a.OrderDate),year(a.OrderDate) ;
+22.SELECT  p.FirstName, p.LastName, h.JobTitle,h.BirthDate from Person.Person as p join HumanResources.Employee as h on p.BusinessEntityID=h.BusinessEntityID ;
+23.SELECT  p.FirstName, p.LastName, s.CustomerID,s.TerritoryID,s.StoreID from Person.Person as p join Sales.Customer as s on s.PersonID=p.BusinessEntityID  ;
+24.select o.SalesOrderID,p.SalesQuota,p.Bonus from Sales.SalesOrderHeader as o join Sales.SalesPerson as p on o.SalesPersonID=p.BusinessEntityID;
+25.select O.Color,o.Size,p.CatalogDescription from Production.Product as o join Production.ProductModel as p on O.ProductModelID=P.ProductModelID;
+26.select DISTINCT h.SalesOrderID, p.Name,v.FirstName,v.LastName from Sales.SalesOrderHeader as h join Sales.SalesOrderDetail as d on h.SalesOrderID=d.SalesOrderID join Production.Product as p on p.ProductID=d.ProductID join Person.Person as v on h.CustomerID=v.BusinessEntityID 
+27.select h.SalesOrderID, p.Name from  Production.Product as p  left JOIN (SELECT D.SalesOrderID,D.ProductID FROM Sales.SalesOrderHeader as h join Sales.SalesOrderDetail as d on h.SalesOrderID=d.SalesOrderID)  AS h on h.ProductID=p.ProductID order by SalesOrderID asc;
+31.select s.ProductID,count(s.ProductID) from Sales.SalesOrderDetail as s group by ProductID;
